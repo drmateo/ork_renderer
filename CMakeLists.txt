@@ -1,20 +1,24 @@
 cmake_minimum_required(VERSION 2.8.0)
 project(object_recognition_renderer)
-
-find_package(Boost REQUIRED)
-find_package(OpenCV REQUIRED)
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake/Modules")
 
 find_package(catkin REQUIRED)
+find_package(Boost REQUIRED)
+find_package(OpenCV REQUIRED)
+find_package(OpenGL REQUIRED)
+set(${PROJECT_NAME}_depends OPENGL OpenCV Boost)
+
+message(STATUS "OPENGL_INCLUDE_DIR" ${OPENGL_INCLUDE_DIR})
 
 option(USE_GLUT "Use GLUT instead of OSMesa" OFF)
-
 if (${USE_GLUT})
 find_package(GLUT)
-set(${PROJECT_NAME}_depends GLUT)
+list(APPEND ${PROJECT_NAME}_depends GLUT)
 endif()
 
-catkin_package(INCLUDE_DIRS include
-               DEPENDS Boost ${${PROJECT_NAME}_depends}
+
+catkin_package(INCLUDE_DIRS include ${OPENGL_INCLUDE_DIR}
+               DEPENDS ${${PROJECT_NAME}_depends}
                LIBRARIES ${PROJECT_NAME}_2d ${PROJECT_NAME}_3d
 )
 

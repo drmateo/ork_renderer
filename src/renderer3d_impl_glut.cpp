@@ -35,10 +35,12 @@
 
 #define GL_GLEXT_PROTOTYPES
 
+
 #include <GL/gl.h>
 #include <GL/glu.h>
 #include <GL/glut.h>
 #include <GL/freeglut_ext.h>
+
 
 #include "renderer3d_impl_glut.h"
 

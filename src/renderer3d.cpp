@@ -38,13 +38,14 @@
 #include <iostream>
 #include <stdlib.h>
 
+
 #include <GL/gl.h>
 
 #include "model.h"
 
 #include <boost/date_time/posix_time/posix_time.hpp>
 
-#if USE_GLUT
+#if USE_RENDERER_GLUT
 #include "renderer3d_impl_glut.h"
 #else
 #include "renderer3d_impl_osmesa.h"

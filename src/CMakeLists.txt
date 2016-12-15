@@ -1,4 +1,3 @@
-FIND_PACKAGE(OpenGL)
 
 find_package(PkgConfig REQUIRED)
 find_package(ASSIMP QUIET)
@@ -26,6 +25,24 @@ INCLUDE_DIRECTORIES(SYSTEM ${CMAKE_CURRENT_SOURCE_DIR}
 )
 link_directories(${ASSIMP_LIBRARY_DIRS})
 
+if(APPLE)
+  find_package(GLUT REQUIRED)
+  include_directories(${GLUT_INCLUDE_DIRS})
+  link_directories(${GLUT_LIBRARY_DIRS})
+  add_definitions(${GLUT_DEFINITIONS})
+  if(NOT GLUT_FOUND)
+      message(ERROR " GLUT not found!")
+  endif(NOT GLUT_FOUND)
+
+  find_package(OpenGL REQUIRED)
+  include_directories(${OpenGL_INCLUDE_DIRS})
+  link_directories(${OpenGL_LIBRARY_DIRS})
+  add_definitions(${OpenGL_DEFINITIONS})
+  if(NOT OPENGL_FOUND)
+      message(ERROR " OPENGL not found!")
+  endif(NOT OPENGL_FOUND)
+endif(APPLE)
+
 if (${USE_GLUT})
   add_definitions(-DUSE_RENDERER_GLUT=1)
 
@@ -36,7 +53,7 @@ if (${USE_GLUT})
   set(EXTRA_LIBRARIES ${OPENGL_LIBRARIES} ${GLUT_LIBRARIES})
 else()
   set(EXTRA_SOURCES renderer3d_impl_osmesa.cpp)
-  set(EXTRA_LIBRARIES OSMesa GLU)
+  set(EXTRA_LIBRARIES ${OPENGL_LIBRARIES})
 endif()
 
 add_library(${PROJECT_NAME}_3d ${SOURCES} ${EXTRA_SOURCES})

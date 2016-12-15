@@ -37,13 +37,17 @@
 #ifndef ORK_RENDERER_RENDERER3D_H_
 #define ORK_RENDERER_RENDERER3D_H_
 
-#include <string>
 
 #include <opencv2/core/core.hpp>
 
+
 #include <GL/gl.h>
 
+
 #include "renderer.h"
+
+#include <string>
+
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
