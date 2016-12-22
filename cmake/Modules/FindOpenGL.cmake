@@ -91,21 +91,21 @@ else(UNIX)
   )
 
   find_library(OPENGL_gl_LIBRARY
-    NAMES GL 
-    PATHS 
+    NAMES GL
+    PATHS
         /usr/X11/lib
         /usr/X11R6/lib
   )
 
   find_library(OPENGL_glu_LIBRARY
-    NAMES GLU 
+    NAMES GLU
     PATHS ${OPENGL_gl_LIBRARY}
         /usr/X11/lib
         /usr/X11R6/lib
   )
 
   find_library(OPENGL_osmesa_LIBRARY
-    NAMES OSMesa 
+    NAMES OSMesa
     PATHS ${OPENGL_gl_LIBRARY}
         /usr/X11/lib
         /usr/X11R6/lib

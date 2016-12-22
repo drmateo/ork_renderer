@@ -36,7 +36,6 @@
 #ifndef ORK_RENDERER_RENDERER_OSMESA_H_
 #define ORK_RENDERER_RENDERER_OSMESA_H_
 
-
 #include <GL/osmesa.h>
 
 #include "renderer3d_impl_base.h"

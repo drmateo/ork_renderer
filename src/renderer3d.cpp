@@ -38,7 +38,6 @@
 #include <iostream>
 #include <stdlib.h>
 
-
 #include <GL/gl.h>
 
 #include "model.h"

@@ -1,3 +1,4 @@
+FIND_PACKAGE(OpenGL)
 
 find_package(PkgConfig REQUIRED)
 find_package(ASSIMP QUIET)
@@ -42,7 +43,6 @@ if(APPLE)
       message(ERROR " OPENGL not found!")
   endif(NOT OPENGL_FOUND)
 endif(APPLE)
-
 if (${USE_GLUT})
   add_definitions(-DUSE_RENDERER_GLUT=1)
 
