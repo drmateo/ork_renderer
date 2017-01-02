@@ -54,6 +54,7 @@ Renderer3d::Renderer3d(const std::string & mesh_path)
     :
       renderer_(new Renderer3dImpl(mesh_path, 0, 0)),
       angle_(0),
+      crop_(true),
       focal_length_x_(0),
       focal_length_y_(0),
       near_(0),
@@ -78,7 +79,7 @@ Renderer3d::~Renderer3d()
 
 void
 Renderer3d::set_parameters(size_t width, size_t height, double focal_length_x, double focal_length_y, double near,
-                         double far)
+                         double far, bool crop)
 {
   renderer_->width_ = width;
   renderer_->height_ = height;
@@ -88,6 +89,8 @@ Renderer3d::set_parameters(size_t width, size_t height, double focal_length_x, d
 
   near_ = near;
   far_ = far;
+
+  crop_ = crop;
 
   renderer_->clean_buffers();
 
@@ -226,16 +229,22 @@ Renderer3d::render(cv::Mat &image_out, cv::Mat &depth_out, cv::Mat &mask_out, cv
   cv::Mat depth_scale(cv::Size(renderer_->width_, renderer_->height_), CV_16UC1);
   depth.convertTo(depth_scale, CV_16UC1, 1e3);
 
-  // Crop the images, just so that they are smaller to write/read
-  if (i_min > 0)
-    --i_min;
-  if (i_max < renderer_->width_ - 1)
-    ++i_max;
-  if (j_min > 0)
-    --j_min;
-  if (j_max < renderer_->height_ - 1)
-    ++j_max;
-  rect = cv::Rect(i_min, j_min, i_max - i_min + 1, j_max - j_min + 1);
+  if (crop_)
+  {
+    // Crop the images, just so that they are smaller to write/read
+    if (i_min > 0)
+      --i_min;
+    if (i_max < renderer_->width_ - 1)
+      ++i_max;
+    if (j_min > 0)
+      --j_min;
+    if (j_max < renderer_->height_ - 1)
+      ++j_max;
+
+    rect = cv::Rect(i_min, j_min, i_max - i_min + 1, j_max - j_min + 1);
+  }
+  else
+    rect = cv::Rect(0, 0, renderer_->width_, renderer_->height_);
 
   if ((rect.width <=0) || (rect.height <= 0)) {
     depth_out = cv::Mat();
@@ -296,16 +305,22 @@ Renderer3d::renderDepthOnly(cv::Mat &depth_out, cv::Mat &mask_out, cv::Rect &rec
   cv::Mat depth_scale(cv::Size(renderer_->width_, renderer_->height_), CV_16UC1);
   depth.convertTo(depth_scale, CV_16UC1, 1e3);
 
-  // Crop the images, just so that they are smaller to write/read
-  if (i_min > 0)
-    --i_min;
-  if (i_max < renderer_->width_ - 1)
-    ++i_max;
-  if (j_min > 0)
-    --j_min;
-  if (j_max < renderer_->height_ - 1)
-    ++j_max;
-  rect = cv::Rect(i_min, j_min, i_max - i_min + 1, j_max - j_min + 1);
+  if (crop_)
+  {
+    // Crop the images, just so that they are smaller to write/read
+    if (i_min > 0)
+      --i_min;
+    if (i_max < renderer_->width_ - 1)
+      ++i_max;
+    if (j_min > 0)
+      --j_min;
+    if (j_max < renderer_->height_ - 1)
+      ++j_max;
+
+    rect = cv::Rect(i_min, j_min, i_max - i_min + 1, j_max - j_min + 1);
+  }
+  else
+    rect = cv::Rect(0, 0, renderer_->width_, renderer_->height_);
 
   if ((rect.width <=0) || (rect.height <= 0)) {
     depth_out = cv::Mat();

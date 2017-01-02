@@ -37,20 +37,23 @@
 #include <object_recognition_renderer/renderer.h>
 #include <object_recognition_renderer/utils.h>
 
+#include <iostream>
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-RendererIterator::RendererIterator(Renderer *renderer, size_t n_points)
+RendererIterator::RendererIterator(Renderer *renderer, size_t n_points, float radius_min, float radius_max, float radius_step,
+                                   int angle_step, int angle_min, int angle_max)
     :
       n_points_(n_points),
       index_(0),
       renderer_(renderer),
-      angle_min_(-80),
-      angle_max_(80),
-      angle_step_(40),
+      angle_min_(angle_min),
+      angle_max_(angle_max),
+      angle_step_(angle_step),
       angle_(angle_min_),
-      radius_min_(0.4),
-      radius_max_(0.8),
-      radius_step_(0.2),
+      radius_min_(radius_min),
+      radius_max_(radius_max),
+      radius_step_(radius_step),
       radius_(radius_min_)
 {
 }
@@ -89,7 +92,7 @@ RendererIterator::render(cv::Mat &image_out, cv::Mat &depth_out, cv::Mat &mask_o
   view_params(t, up);
 
   renderer_->lookAt(t(0), t(1), t(2), up(0), up(1), up(2));
-  //renderer_->render(image_out, depth_out, mask_out, rect_out);
+//  renderer_->render(image_out, depth_out, mask_out, rect_out);
   renderer_->renderDepthOnly(depth_out, mask_out, rect_out);
   renderer_->renderImageOnly(image_out, rect_out);
 }
@@ -225,7 +228,7 @@ RendererIterator::T() const
 size_t
 RendererIterator::n_templates() const
 {
-  return ((angle_max_ - angle_min_) / angle_step_ + 1) * n_points_ * ((radius_max_ - radius_min_) / radius_step_ + 1);
+  return (int((angle_max_ - angle_min_) / angle_step_) + 1) * n_points_ * (int((radius_max_ - radius_min_) / radius_step_) + 1);
 }
 
 /**

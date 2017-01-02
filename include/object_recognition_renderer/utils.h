@@ -66,9 +66,12 @@ class RendererIterator
 {
 public:
   /**
-   * @param file_path the path of the mesh to render
+   * @param renderer the object that will be scaned
+   * @param n_points numbers of camera positions
+   * @
    */
-  RendererIterator(Renderer * renderer, size_t n_points);
+  RendererIterator(Renderer * renderer, size_t n_points, float radius_min = 0.4, float radius_max = 0.8, float radius_step = 0.2,
+                   int angle_step = 10, int angle_min = -80, int angle_max = 80);
 
   /** Iterate to get to a different view
    * We don't implement the postfix operator on purpose

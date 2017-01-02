@@ -67,7 +67,7 @@ public:
   ~Renderer3d();
 
   void
-  set_parameters(size_t width, size_t height, double focal_length_x, double focal_length_y, double near, double far);
+  set_parameters(size_t width, size_t height, double focal_length_x, double focal_length_y, double near, double far, bool crop=true);
 
   /** Similar to the gluLookAt function
    * @param x the x position of the eye pointt
@@ -107,6 +107,7 @@ public:
 protected:
   double focal_length_x_, focal_length_y_, near_, far_;
   float angle_;
+  bool crop_;
 
   Model* model_;
   GLuint scene_list_;
