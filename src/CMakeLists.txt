@@ -18,7 +18,7 @@ set(SOURCES model.cpp renderer3d.cpp utils.cpp)
 
 find_package(OpenCV REQUIRED)
 
-INCLUDE_DIRECTORIES(SYSTEM ${CMAKE_CURRENT_SOURCE_DIR}
+include_directories(SYSTEM ${CMAKE_CURRENT_SOURCE_DIR}
                            ${ASSIMP_INCLUDE_DIRS}
                            ${ASSIMP_INCLUDE_DIRS}/../
                            ${OpenCV_INCLUDE_DIR}
