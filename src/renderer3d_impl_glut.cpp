@@ -101,6 +101,7 @@ Renderer3dImpl::bind_buffers() const
 {
   glBindFramebuffer(GL_FRAMEBUFFER, fbo_id_);
   glBindRenderbuffer(GL_RENDERBUFFER, rbo_id_);
+  glutSwapBuffers();
 }
 
 void
