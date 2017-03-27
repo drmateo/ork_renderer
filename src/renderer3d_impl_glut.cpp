@@ -80,6 +80,7 @@ Renderer3dImpl::set_parameters_low_level()
   glutCreateWindow("Assimp renderer");
 
   // create a framebuffer object
+  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   glGenFramebuffers(1, &fbo_id_);
   glBindFramebuffer(GL_FRAMEBUFFER, fbo_id_);
 
